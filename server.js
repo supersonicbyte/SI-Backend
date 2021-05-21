@@ -11,14 +11,19 @@ app.use(cors());
 // runs on server start
 const createTestTable = "CREATE TABLE TEST(NAME TEXT NOT NULL)";
 const insertTest = "INSERT INTO TEST(NAME) VALUES (hello)";
-const res = await pool.query(createTestTable, (err, res) => {
-    console.log(err, res)
-    client.end()
-});
-const res1 = await pool.query(insertTest, (err, res) => {
-    console.log(err, res)
-    client.end()
-})
+
+async function create() {
+    const res = await pool.query(createTestTable, (err, res) => {
+        console.log(err, res)
+        client.end()
+    });
+    const res1 = await pool.query(insertTest, (err, res) => {
+        console.log(err, res)
+        client.end()
+    })
+}
+
+create();
 
 app.get('/', (req, res) => { res.send("<h1>Up and running.</h1>"); });
 
