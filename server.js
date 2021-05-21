@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express();
 const db = require('./api/db/index.js');
 const DBStartHelper = require('./api/db/start');
+const port = process.env.PORT || 3000;
 
 DBStartHelper.createDB();
 
@@ -23,6 +24,6 @@ app.get('/test', async(req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log('Server uspješno pokrenut!')
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
