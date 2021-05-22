@@ -5,12 +5,20 @@ const db = require('./api/db/index.js');
 const DBStartHelper = require('./api/db/start');
 const port = process.env.PORT || 3000;
 
+const querries = require('./api/db/querries');
+
 DBStartHelper.createDB();
+DBStartHelper.fillDB();
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use(cors());
 
+app.get('/api/device/activate/:code',querries.activateDevice);
+
+app.get('/api/campaign/:campaignid',querries.getCampaign);
+
+app.post('/api/response/save',querries.saveResponse);
 
 app.get('/', (req, res) => { res.send("<h1>Up and running.</h1>"); });
 
