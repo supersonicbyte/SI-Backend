@@ -5,21 +5,21 @@ async function activateDevice(req, res) {
 
     const installation_code = req.params.code;
 
-    const selectDevice = "Select fa.DeviceId, fa.CampaignID from FADevice fa where fa.InstallationCode = $1";
-    const updateDevice = "Update FADevice set InstallationCode = null where DeviceId = $1";
+    const selectDevice = "Select fa.DeviceName, fa.DeviceId, fa.CampaignID from FADevice fa where fa.InstallationCode = $1";
+    // const updateDevice = "Update FADevice set InstallationCode = null where DeviceId = $1";
 
     try{
 
         const selectRes = await db.pool.query(selectDevice, [installation_code]);
 
-        const updateRes = await db.pool.query(updateDevice, [selectRes.rows[0].deviceid]);
+        // const updateRes = await db.pool.query(updateDevice, [selectRes.rows[0].deviceid]);
 
-        const response = {DeviceId:selectRes.rows[0].deviceid,CampaignID:selectRes.rows[0].campaignid};
+        const response = {Name: selectRes.rows[0].devicename, DeviceId:selectRes.rows[0].deviceid,CampaignID:selectRes.rows[0].campaignid};
 
         console.log(response);
 
         res.status(200);
-       res.send(response);
+        res.send(response);
         
     }catch(err){
 
