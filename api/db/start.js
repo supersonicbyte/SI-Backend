@@ -10,12 +10,12 @@ const insertTest = "INSERT INTO TEST(NAME) VALUES ($1)";
 
 const tableExists = "SELECT * FROM Question";
 const resetdb = `
-DROP TABLE Question_Answer CASCADE;
-DROP TABLE UserResponse CASCADE;
-DROP TABLE FADevice CASCADE;
-DROP TABLE Question CASCADE;
-DROP TABLE Campaign CASCADE;
-DROP TABLE Answer CASCADE;
+DROP TABLE IF EXISTS Question_Answer CASCADE;
+DROP TABLE IF EXISTS UserResponse CASCADE;
+DROP TABLE IF EXISTS FADevice CASCADE;
+DROP TABLE IF EXISTS Question CASCADE;
+DROP TABLE IF EXISTS Campaign CASCADE;
+DROP TABLE IF EXISTS Answer CASCADE;
 `
 const generateDB = `
 
@@ -155,8 +155,9 @@ ADD CONSTRAINT Fk_Answer_UserResponse_AnswerID FOREIGN KEY (AnswerID) REFERENCES
 module.exports.resetDB = async function resetDB() {
     try {
         await db.pool.query(resetdb);
+        console.log("Reseting database");
     } catch (error) {
-        console.log(error);
+        console.log("Error while reseting", error);
         return;
     }
 };
@@ -164,20 +165,20 @@ module.exports.resetDB = async function resetDB() {
 module.exports.createDB = async function createDB() {
 
 
-    // try {
-    //     const exist = await db.pool.query(tableExists);
-    //     // table already exists
-    //     if (exist) return;
-    // } catch (error) {
-    //     console.log(error);
-    //     //nema potrebe ispisivati jer zelimo da se ovo desi
-    // }
+    try {
+        const exist = await db.pool.query(tableExists);
+        // table already exists
+        if (exist) return;
+    } catch (error) {
+        console.log(error);
+        //nema potrebe ispisivati jer zelimo da se ovo desi
+    }
     
     try {
         const res = await db.pool.query(generateDB);
         console.log("Generating a new database");
     } catch (error) {
-        console.log(error);
+        console.log("Error while generating ", error);
     }
 
 
@@ -186,16 +187,16 @@ module.exports.createDB = async function createDB() {
 module.exports.fillDB = async function fillDB() {
 
     const fill = `
-    TRUNCATE TABLE campaign cascade;
-    TRUNCATE TABLE answer cascade;
-    TRUNCATE TABLE question cascade;
-    TRUNCATE TABLE fadevice cascade;
-    TRUNCATE TABLE userresponse cascade,
-    TRUNCATE TABLE question_answer cascade;
+    TRUNCATE TABLE Campaign cascade;
+    TRUNCATE TABLE Answer cascade;
+    TRUNCATE TABLE Question cascade;
+    TRUNCATE TABLE FADevice cascade;
+    TRUNCATE TABLE UserResponse cascade;
+    TRUNCATE TABLE Question_Answer cascade;
 
     INSERT INTO Campaign (CampaignID, name, startdate, enddate) VALUES (1, 'Zadovoljstvo korisnika sa našim voćem', To_Date('21-05-2021', 'dd-mm-yyyy'), To_Date('21-05-2021', 'dd-mm-yyyy'));
-    INSERT INTO FADevice (DeviceID, DeviceName, CampaignID, InstallationCode) VALUES (1, 1, 'grupa1', 'spaha1');
-    INSERT INTO FADevice (DeviceID, DeviceName, CampaignID, InstallationCode) VALUES (2, 1, 'grupa2', 'spaha2');
+    INSERT INTO FADevice (DeviceID, DeviceName, CampaignID, InstallationCode) VALUES (1, 'grupa1', 1, 'spaha1');
+    INSERT INTO FADevice (DeviceID, DeviceName, CampaignID, InstallationCode) VALUES (2, 'grupa2', 1, 'spaha2');
     
     Insert into Answer(AnswerId,AnswerText,IsImage) values (1,'Musko',false); --1
     Insert into Answer(AnswerId,AnswerText,IsImage) values (2,'Zensko',false); --2
@@ -247,7 +248,7 @@ module.exports.fillDB = async function fillDB() {
         }
 
     } catch (error) {
-        console.log(error);
+        console.log("Error while filling ",error);
         return;
     }
 

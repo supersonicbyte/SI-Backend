@@ -7,9 +7,11 @@ const port = process.env.PORT || 3000;
 
 const querries = require('./api/db/querries');
 
-DBStartHelper.resetDB();
-DBStartHelper.createDB();
-DBStartHelper.fillDB();
+DBStartHelper.resetDB().then(() => {
+    DBStartHelper.createDB().then(() => {
+        DBStartHelper.fillDB();
+    });
+});
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());

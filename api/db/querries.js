@@ -111,7 +111,7 @@ async function getCampaign(req, res) {
 
 
     }catch(err){
-        console.log(err);
+        console.log("Error in getCampaign", err);
         res.status(404);
         res.send({error:err});
     }
@@ -133,7 +133,7 @@ async function saveResponse(req, res) {
     res.send({success:true});
 
     }catch(err){
-        console.log(err);
+        console.log("Error in saveResponse", err);
         res.status(400);
         res.send({error:err});
     }
