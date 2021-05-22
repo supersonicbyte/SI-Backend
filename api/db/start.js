@@ -51,6 +51,7 @@ CREATE TABLE
 (
 	DeviceID SERIAL NOT NULL
 	, CampaignID INT NOT NULL
+    , DeviceName VARCHAR(300) NULL
 	, InstallationCode VARCHAR(300) NULL
 ,
 CONSTRAINT Pk_FADevice_DeviceID PRIMARY KEY
@@ -170,9 +171,16 @@ module.exports.createDB = async function createDB() {
 module.exports.fillDB = async function fillDB() {
 
     const fill = `
+    TRUNCATE TABLE campaign cascade;
+    TRUNCATE TABLE answer cascade;
+    TRUNCATE TABLE question cascade;
+    TRUNCATE TABLE fadevice cascade;
+    TRUNCATE TABLE userresponse cascade,
+    TRUNCATE TABLE question_answer cascade;
+
     INSERT INTO Campaign (CampaignID, name, startdate, enddate) VALUES (1, 'Zadovoljstvo korisnika sa našim voćem', To_Date('21-05-2021', 'dd-mm-yyyy'), To_Date('21-05-2021', 'dd-mm-yyyy'));
-    INSERT INTO FADevice (DeviceID, CampaignID, InstallationCode) VALUES (1, 1, 'spaha1');
-    INSERT INTO FADevice (DeviceID, CampaignID, InstallationCode) VALUES (2, 1, 'spaha2');
+    INSERT INTO FADevice (DeviceID, DeviceName, CampaignID, InstallationCode) VALUES (1, 1, 'grupa1', 'spaha1');
+    INSERT INTO FADevice (DeviceID, DeviceName, CampaignID, InstallationCode) VALUES (2, 1, 'grupa2', 'spaha2');
     
     Insert into Answer(AnswerId,AnswerText,IsImage) values (1,'Musko',false); --1
     Insert into Answer(AnswerId,AnswerText,IsImage) values (2,'Zensko',false); --2
