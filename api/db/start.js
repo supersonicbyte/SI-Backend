@@ -16,6 +16,13 @@ const generateDB = `
 --	Tables
 --**********************************************************************
 
+DROP TABLE Question_Answer CASCADE;
+DROP TABLE UserResponse CASCADE;
+DROP TABLE FADevice CASCADE;
+DROP TABLE Question CASCADE;
+DROP TABLE Campaign CASCADE;
+DROP TABLE Answer CASCADE;
+
 -- Table Answer
 CREATE TABLE
 	Answer
