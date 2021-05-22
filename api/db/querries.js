@@ -68,7 +68,7 @@ async function getCampaign(req, res) {
             const id = question.questionid;
     
             const questionJSON = {};
-            questionJSON.QuestionID = question.questionid;
+			questionJSON.QuestionId = question.questionid;
             questionJSON.QuestionType = question.questiontype;
             questionJSON.QuestionText = question.questiontext;
             questionJSON.IsDependent = question.isdependent;
@@ -82,7 +82,8 @@ async function getCampaign(req, res) {
     
             answerRes.rows.forEach(async answer => {
     
-                QuestionAnswers.push({AnswerId:answer.answerid,Answer:{
+                QuestionAnswers.push({QuestionId:id, AnswerId:answer.answerid,Answer:{
+                    AnswerId:answer.answerid,
                     AnswerText:answer.answertext,
                     IsAPicture:answer.isimage
                 }});
