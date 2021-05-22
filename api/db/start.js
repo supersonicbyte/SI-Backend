@@ -9,19 +9,19 @@ const insertTest = "INSERT INTO TEST(NAME) VALUES ($1)";
 */
 
 const tableExists = "SELECT * FROM Question";
-
-const generateDB = `
-
---**********************************************************************
---	Tables
---**********************************************************************
-
+const resetdb = `
 DROP TABLE Question_Answer CASCADE;
 DROP TABLE UserResponse CASCADE;
 DROP TABLE FADevice CASCADE;
 DROP TABLE Question CASCADE;
 DROP TABLE Campaign CASCADE;
 DROP TABLE Answer CASCADE;
+`;
+const generateDB = `
+
+--**********************************************************************
+--	Tables
+--**********************************************************************
 
 -- Table Answer
 CREATE TABLE
@@ -173,6 +173,15 @@ module.exports.createDB = async function createDB() {
 
 
 }
+
+module.exports.resetDB = async function resetDB() {
+    try {
+        await db.pool.query(resetdb);
+    } catch (error) {
+        console.log(error);
+        return;
+    }
+};
 
 
 module.exports.fillDB = async function fillDB() {

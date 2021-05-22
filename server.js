@@ -21,8 +21,12 @@ app.post('/api/response/save',querries.saveResponse);
 
 app.get('/', (req, res) => { res.send("<h1>Up and running.</h1>"); });
 
-app.get('/api/reset', (req, res) => {
+app.get('/api/reset/data', (req, res) => {
     DBStartHelper.fillDB();
+});
+
+app.get('/api/reset/db', (req, res) => {
+    DBStartHelper.resetDB();
 });
 
 app.get('/test', async(req, res) => {
