@@ -8,7 +8,6 @@ const port = process.env.PORT || 3000;
 const querries = require('./api/db/querries');
 
 DBStartHelper.createDB();
-DBStartHelper.fillDB();
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
@@ -21,6 +20,10 @@ app.get('/api/campaign/:campaignid',querries.getCampaign);
 app.post('/api/response/save',querries.saveResponse);
 
 app.get('/', (req, res) => { res.send("<h1>Up and running.</h1>"); });
+
+app.get('/api/reset', (req, res) => {
+    DBStartHelper.fillDB();
+});
 
 app.get('/test', async(req, res) => {
     try {
