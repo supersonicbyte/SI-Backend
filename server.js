@@ -9,6 +9,7 @@ const querries = require('./api/db/querries');
 
 DBStartHelper.resetDB();
 DBStartHelper.createDB();
+DBStartHelper.fillDB();
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());

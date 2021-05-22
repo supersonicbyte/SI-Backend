@@ -16,7 +16,7 @@ DROP TABLE FADevice CASCADE;
 DROP TABLE Question CASCADE;
 DROP TABLE Campaign CASCADE;
 DROP TABLE Answer CASCADE;
-`;
+`
 const generateDB = `
 
 --**********************************************************************
@@ -152,17 +152,26 @@ ADD CONSTRAINT Fk_Answer_UserResponse_AnswerID FOREIGN KEY (AnswerID) REFERENCES
 
 `
 
+module.exports.resetDB = async function resetDB() {
+    try {
+        await db.pool.query(resetdb);
+    } catch (error) {
+        console.log(error);
+        return;
+    }
+};
+
 module.exports.createDB = async function createDB() {
 
 
-    try {
-        const exist = await db.pool.query(tableExists);
-        // table already exists
-        if (exist) return;
-    } catch (error) {
-        //console.log(error);
-        //nema potrebe ispisivati jer zelimo da se ovo desi
-    }
+    // try {
+    //     const exist = await db.pool.query(tableExists);
+    //     // table already exists
+    //     if (exist) return;
+    // } catch (error) {
+    //     console.log(error);
+    //     //nema potrebe ispisivati jer zelimo da se ovo desi
+    // }
     
     try {
         const res = await db.pool.query(generateDB);
@@ -173,16 +182,6 @@ module.exports.createDB = async function createDB() {
 
 
 }
-
-module.exports.resetDB = async function resetDB() {
-    try {
-        await db.pool.query(resetdb);
-    } catch (error) {
-        console.log(error);
-        return;
-    }
-};
-
 
 module.exports.fillDB = async function fillDB() {
 
