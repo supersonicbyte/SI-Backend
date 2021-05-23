@@ -204,34 +204,110 @@ module.exports.fillDB = async function fillDB() {
     INSERT INTO Campaign (name, startdate, enddate) VALUES ( 'Zadovoljstvo korisnika sa našim voćem', To_Date('21-05-2021', 'dd-mm-yyyy'), To_Date('21-05-2021', 'dd-mm-yyyy'));
     INSERT INTO FADevice ( DeviceName, CampaignID, InstallationCode) VALUES ('grupa1', 1, 'spaha1');
     INSERT INTO FADevice ( DeviceName, CampaignID, InstallationCode) VALUES ('grupa2', 1, 'spaha2');
+
+    INSERT INTO Campaign (name, startdate, enddate) VALUES ( 'Pitanja o namirnicama', To_Date('01-03-2021', 'dd-mm-yyyy'), To_Date('18-08-2021', 'dd-mm-yyyy'));
+    INSERT INTO FADevice ( DeviceName, CampaignID, InstallationCode) VALUES ('grupa3', 1, 'spaha3');
     
     Insert into Answer(AnswerText,IsImage) values ('Musko',false); --1
     Insert into Answer(AnswerText,IsImage) values ('Zensko',false); --2
-    
     Insert into Answer(AnswerText,IsImage) values ('5',false); --3
-    
     Insert into Answer(AnswerText,IsImage) values ('Jabuka',false); --4
     Insert into Answer(AnswerText,IsImage) values ('Kruska',false); --5
     Insert into Answer(AnswerText,IsImage) values ('Jagoda',false); --6
     Insert into Answer(AnswerText,IsImage) values ('Lubenica',false); --7
 
-    Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Single','Kojeg ste spola?',false,null,null,null,1);--1
-    
+    Insert into Answer(AnswerText,IsImage) values ('Da',false); --8
+    Insert into Answer(AnswerText,IsImage) values ('Ne',false); --9
+    Insert into Answer(AnswerText,IsImage) values ('5',false); --10
+    Insert into Answer(AnswerText,IsImage) values ('Da',false); --11
+    Insert into Answer(AnswerText,IsImage) values ('Ne',false); --12
+    Insert into Answer(AnswerText,IsImage) values ('Krompir',false); --13
+    Insert into Answer(AnswerText,IsImage) values ('Krastavac',false); --14
+    Insert into Answer(AnswerText,IsImage) values ('Luk',false); --15
+    Insert into Answer(AnswerText,IsImage) values ('Paprika',false); --16
+    Insert into Answer(AnswerText,IsImage) values ('Kupus',false); --17
+    Insert into Answer(AnswerText,IsImage) values ('Mrkva',false); --18
+
+    Insert into Answer(AnswerText,IsImage) values ('Da',false); --19
+    Insert into Answer(AnswerText,IsImage) values ('Ne',false); --20
+    Insert into Answer(AnswerText,IsImage) values ('10',false); --21
+
+    Insert into Answer(AnswerText,IsImage) values ('Pivo',false); --22
+    Insert into Answer(AnswerText,IsImage) values ('Rakija',false); --23
+    Insert into Answer(AnswerText,IsImage) values ('Jeger',false); --24
+    Insert into Answer(AnswerText,IsImage) values ('Vodka',false); --25
+    Insert into Answer(AnswerText,IsImage) values ('Štok',false); --26
+    Insert into Answer(AnswerText,IsImage) values ('Viski',false); --27
+    Insert into Answer(AnswerText,IsImage) values ('Džin',false); --28
+    Insert into Answer(AnswerText,IsImage) values ('Viljamovka',false); --29
+    Insert into Answer(AnswerText,IsImage) values ('Višnja',false); --30
+    Insert into Answer(AnswerText,IsImage) values ('Liker',false); --31
+
+
+
+    Insert into Answer(AnswerText,IsImage) values ('<18',false); --14
+    Insert into Answer(AnswerText,IsImage) values ('18-25',false); --15
+    Insert into Answer(AnswerText,IsImage) values ('26-40',false); --16
+    Insert into Answer(AnswerText,IsImage) values ('41-65',false); --17
+    Insert into Answer(AnswerText,IsImage) values ('>66',false); --18
+
+
+
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Single','Kojeg ste spola?',false,null,null,null,1);--1
    Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Scale','Koliko volite voce?',false,null,null,null,1);--2
-    
    Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Multiple','Koje voce volite?',false,null,null,null,1);--3
-    
    Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Text','Sta mislite o ovome upitu?',false,null,null,null,1);--4
+
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Single','Da li ste pronasli proizvode koje ste namjeravli kupiti?',false,null,null,null,2);--5
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Scale','Koliko ste zadovoljni cijenama?',false,null,null,null,2);--6
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Multiple','Koje povrce najvise kupujete?',false,null,null,null,2);--7
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Text','Koje proizvode najcesce kupujete i zasto?',false,null,null,null,2);--8
+
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Single','Da li konzumirate alkohol?',false,null,null,null,1);--9
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Scale','Ocijenite Vaše iskustvo kupovine u ovoj poslovnici.!',false,null,null,null,1);--10
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Multiple','Koja alkoholna pića konzumirate?',false,null,null,null,1);--11
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Text','Koliko cesto idete u nabavku?',false,null,null,null,1);--12
+
+
 
    Insert into Question_Answer(QuestionID,AnswerID) values(1,1);
    Insert into Question_Answer(QuestionID,AnswerID) values(1,2);
-   
+
    Insert into Question_Answer(QuestionID,AnswerID) values(2,3);
-   
+
    Insert into Question_Answer(QuestionID,AnswerID) values(3,4);
    Insert into Question_Answer(QuestionID,AnswerID) values(3,5);
    Insert into Question_Answer(QuestionID,AnswerID) values(3,6);
    Insert into Question_Answer(QuestionID,AnswerID) values(3,7);
+
+   Insert into Question_Answer(QuestionID,AnswerID) values(5,8);
+   Insert into Question_Answer(QuestionID,AnswerID) values(5,9);
+   Insert into Question_Answer(QuestionID,AnswerID) values(6,10);
+   Insert into Question_Answer(QuestionID,AnswerID) values(7,13);
+   Insert into Question_Answer(QuestionID,AnswerID) values(7,14);
+   Insert into Question_Answer(QuestionID,AnswerID) values(7,15);
+   Insert into Question_Answer(QuestionID,AnswerID) values(7,16);
+   Insert into Question_Answer(QuestionID,AnswerID) values(7,17);
+   Insert into Question_Answer(QuestionID,AnswerID) values(7,18);
+
+   Insert into Question_Answer(QuestionID,AnswerID) values(9,19);
+   Insert into Question_Answer(QuestionID,AnswerID) values(9,20);
+   Insert into Question_Answer(QuestionID,AnswerID) values(10,21);
+   Insert into Question_Answer(QuestionID,AnswerID) values(11,22);
+   Insert into Question_Answer(QuestionID,AnswerID) values(11,23);
+   Insert into Question_Answer(QuestionID,AnswerID) values(11,24);
+   Insert into Question_Answer(QuestionID,AnswerID) values(11,25);
+   Insert into Question_Answer(QuestionID,AnswerID) values(11,26);
+   Insert into Question_Answer(QuestionID,AnswerID) values(11,27);
+   Insert into Question_Answer(QuestionID,AnswerID) values(11,28);
+   Insert into Question_Answer(QuestionID,AnswerID) values(11,29);
+   Insert into Question_Answer(QuestionID,AnswerID) values(11,30);
+   Insert into Question_Answer(QuestionID,AnswerID) values(11,31);
+
+
+   
+
+
 
    Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);
    Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);

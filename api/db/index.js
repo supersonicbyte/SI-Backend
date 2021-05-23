@@ -9,16 +9,16 @@ const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_P
 
 const pool = new Pool({
     
-  /*  connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+    connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
     ssl: {
         rejectUnauthorized: false
-    },*/
+    },
 
-    user: 'postgres',
+   /* user: 'postgres',
     host: '127.0.0.1',
     database: 'SI-DB',
     password: '1234',
-    port: 5432,
+    port: 5432,*/
 });
 
 module.exports = { pool }
