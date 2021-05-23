@@ -155,9 +155,9 @@ ADD CONSTRAINT Fk_Answer_UserResponse_AnswerID FOREIGN KEY (AnswerID) REFERENCES
 module.exports.resetDB = async function resetDB() {
     try {
         await db.pool.query(resetdb);
-        console.log("Reseting database");
+        console.log("Reseting database\n");
     } catch (error) {
-        console.log("Error while reseting", error);
+        console.log("Error while reseting\n", error);
         return;
     }
 };
@@ -165,20 +165,19 @@ module.exports.resetDB = async function resetDB() {
 module.exports.createDB = async function createDB() {
 
 
-    try {
+    /*try {
         const exist = await db.pool.query(tableExists);
         // table already exists
         if (exist) return;
     } catch (error) {
-        console.log(error);
-        //nema potrebe ispisivati jer zelimo da se ovo desi
-    }
+        console.log("Database Exists Already");
+    }*/
     
     try {
         const res = await db.pool.query(generateDB);
         console.log("Generating a new database");
     } catch (error) {
-        console.log("Error while generating ", error);
+        console.log("Error while generating\n ", error);
     }
 
 
@@ -194,27 +193,35 @@ module.exports.fillDB = async function fillDB() {
     TRUNCATE TABLE UserResponse cascade;
     TRUNCATE TABLE Question_Answer cascade;
 
-    INSERT INTO Campaign (CampaignID, name, startdate, enddate) VALUES (1, 'Zadovoljstvo korisnika sa našim voćem', To_Date('21-05-2021', 'dd-mm-yyyy'), To_Date('21-05-2021', 'dd-mm-yyyy'));
-    INSERT INTO FADevice (DeviceID, DeviceName, CampaignID, InstallationCode) VALUES (1, 'grupa1', 1, 'spaha1');
-    INSERT INTO FADevice (DeviceID, DeviceName, CampaignID, InstallationCode) VALUES (2, 'grupa2', 1, 'spaha2');
-    
-    Insert into Answer(AnswerId,AnswerText,IsImage) values (1,'Musko',false); --1
-    Insert into Answer(AnswerId,AnswerText,IsImage) values (2,'Zensko',false); --2
-    
-    Insert into Answer(AnswerId,AnswerText,IsImage) values (3,'5',false); --3
-    
-    Insert into Answer(AnswerId,AnswerText,IsImage) values (4,'Jabuka',false); --4
-    Insert into Answer(AnswerId,AnswerText,IsImage) values (5,'Kruska',false); --5
-    Insert into Answer(AnswerId,AnswerText,IsImage) values (6,'Jagoda',false); --6
-    Insert into Answer(AnswerId,AnswerText,IsImage) values (7,'Lubenica',false); --7
+    ALTER SEQUENCE answer_answerid_seq RESTART WITH 1;
+    ALTER SEQUENCE campaign_campaignid_seq RESTART WITH 1;
+    ALTER SEQUENCE question_questionid_seq RESTART WITH 1;
+    ALTER SEQUENCE fadevice_deviceid_seq RESTART WITH 1;
+    ALTER SEQUENCE question_questionid_seq RESTART WITH 1;
+    ALTER SEQUENCE userresponse_responseid_seq RESTART WITH 1;
 
-    Insert into Question(QuestionID,QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values(1,'Single','Kojeg ste spola?',false,null,null,null,1);--1
+
+    INSERT INTO Campaign (name, startdate, enddate) VALUES ( 'Zadovoljstvo korisnika sa našim voćem', To_Date('21-05-2021', 'dd-mm-yyyy'), To_Date('21-05-2021', 'dd-mm-yyyy'));
+    INSERT INTO FADevice ( DeviceName, CampaignID, InstallationCode) VALUES ('grupa1', 1, 'spaha1');
+    INSERT INTO FADevice ( DeviceName, CampaignID, InstallationCode) VALUES ('grupa2', 1, 'spaha2');
     
-   Insert into Question(QuestionID,QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values(2,'Scale','Koliko volite voce?',false,null,null,null,1);--2
+    Insert into Answer(AnswerText,IsImage) values ('Musko',false); --1
+    Insert into Answer(AnswerText,IsImage) values ('Zensko',false); --2
     
-   Insert into Question(QuestionID,QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values(3,'Multiple','Koje voce volite?',false,null,null,null,1);--3
+    Insert into Answer(AnswerText,IsImage) values ('5',false); --3
     
-   Insert into Question(QuestionID,QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values(4,'Text','Sta mislite o ovome upitu?',false,null,null,null,1);--4
+    Insert into Answer(AnswerText,IsImage) values ('Jabuka',false); --4
+    Insert into Answer(AnswerText,IsImage) values ('Kruska',false); --5
+    Insert into Answer(AnswerText,IsImage) values ('Jagoda',false); --6
+    Insert into Answer(AnswerText,IsImage) values ('Lubenica',false); --7
+
+    Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Single','Kojeg ste spola?',false,null,null,null,1);--1
+    
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Scale','Koliko volite voce?',false,null,null,null,1);--2
+    
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Multiple','Koje voce volite?',false,null,null,null,1);--3
+    
+   Insert into Question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignID) values('Text','Sta mislite o ovome upitu?',false,null,null,null,1);--4
 
    Insert into Question_Answer(QuestionID,AnswerID) values(1,1);
    Insert into Question_Answer(QuestionID,AnswerID) values(1,2);

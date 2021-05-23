@@ -21,7 +21,18 @@ app.get('/api/device/activate/:code',querries.activateDevice);
 
 app.get('/api/campaign/:campaignid',querries.getCampaign);
 
+
+
 app.post('/api/response/save',querries.saveResponse);
+
+app.post('/api/question/add',querries.addQuestion);
+app.post('/api/question/delete',querries.deleteQuestion);
+app.post('/api/question/edit',querries.editQuestion);
+
+
+app.post('/api/answer/add',querries.addAnswer);
+
+app.post('/api/campaign/edit',querries.editCampaign);
 
 app.get('/', (req, res) => { res.send("<h1>Up and running.</h1>"); });
 
