@@ -223,6 +223,7 @@ async function saveResponse(req, res) {
     const responses = req.body.UserResponses;
 
     if(responses == null){
+        console.log("GOT WRONG\n "+JSON.stringify(req.body));
         res.status(300);
         res.send({ error: "Wrong json format" });
         return;
