@@ -222,6 +222,13 @@ async function saveResponse(req, res) {
 
     const responses = req.body.UserResponses;
 
+    if(responses == null){
+        res.status(300);
+        res.send({ error: "Wrong json format" });
+        return;
+    }
+
+
 
     for (let i = 0; i < responses.length; i++) {
 
