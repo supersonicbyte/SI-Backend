@@ -232,7 +232,7 @@ async function saveResponse(req, res) {
 
     for (let i = 0; i < responses.length; i++) {
 
-        let response = responses.rows[i];
+        let response = responses[i];
 
         try {
 
