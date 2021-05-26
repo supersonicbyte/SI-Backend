@@ -156,8 +156,10 @@ async function getCampaign(req, res) {
 
         responseJSON.CampaignID = campaignRes.rows[0].campaignid;
         responseJSON.Name = campaignRes.rows[0].name;
-        responseJSON.StartDate = dateFormat(campaignRes.rows[0].startdate, "dd-mm-yyyy")
-        responseJSON.EndDate = dateFormat(campaignRes.rows[0].enddate, "dd-mm-yyyy")
+     /*   responseJSON.StartDate = dateFormat(campaignRes.rows[0].startdate, "dd-mm-yyyy")
+        responseJSON.EndDate = dateFormat(campaignRes.rows[0].enddate, "dd-mm-yyyy")*/
+        responseJSON.StartDate = campaignRes.rows[0].startdate;
+        responseJSON.enddate = campaignRes.rows[0].enddate;
 
         const selectQuestion = "Select q.* From Campaign c, Question q Where c.CampaignID = q.CampaignID and c.CampaignID=$1";
 
@@ -218,19 +220,26 @@ async function saveResponse(req, res) {
 
     const insertResponse = " Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values($1,$2,$3)";
 
-    const response = req.body.UserResponses;
+    const responses = req.body.UserResponses;
 
-    try {
 
-        const insertRes = await db.pool.query(insertResponse, [response[0].QuestionId, response[0].AnswerId, response[0].CustomAnswer]);
+    for (let i = 0; i < responses.rowCount; i++) {
 
-        res.status(200);
-        res.send({ success: true });
+        let response = responses.rows[i];
 
-    } catch (err) {
-        res.status(400);
-        res.send({ error: err, message: "Error saving response" });
+        try {
+            
+            const insertRes = await db.pool.query(insertResponse, [response[0].QuestionId, response[0].AnswerId, response[0].CustomAnswer]);
+            
+
+        } catch (err) {
+           
+        }
+
     }
+
+    res.status(200);
+    res.send({ success: true });
 
 
 }
