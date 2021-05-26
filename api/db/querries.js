@@ -198,18 +198,6 @@ async function getCampaign(req, res) {
                     }
                 });
             }
-            for (answer in answerRes.rows) {
-
-                QuestionAnswers.push({
-                    QuestionId: id,
-                    AnswerId: answer.answerid,
-                    Answer: {
-                        AnswerId: answer.answerid,
-                        AnswerText: answer.answertext,
-                        IsAPicture: answer.isimage
-                    }
-                });
-            }
             questionJSON.QuestionAnswers = QuestionAnswers;
             questions.push(questionJSON);
         }
