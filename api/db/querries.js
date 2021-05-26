@@ -223,12 +223,12 @@ async function saveResponse(req, res) {
     const responses = req.body.UserResponses;
 
 
-    for (let i = 0; i < responses.rowCount; i++) {
+    for (let i = 0; i < responses.length; i++) {
 
         let response = responses.rows[i];
 
         try {
-            
+
             const insertRes = await db.pool.query(insertResponse, [response[0].QuestionId, response[0].AnswerId, response[0].CustomAnswer]);
             
 
