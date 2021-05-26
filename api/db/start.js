@@ -201,7 +201,7 @@ module.exports.fillDB = async function fillDB() {
     ALTER SEQUENCE userresponse_responseid_seq RESTART WITH 1;
 
 
-    INSERT INTO Campaign (name, startdate, enddate) VALUES ( 'Zadovoljstvo korisnika sa našim voćem', To_Date('21-05-2021', 'dd-mm-yyyy'), To_Date('21-05-2021', 'dd-mm-yyyy'));
+    INSERT INTO Campaign (name, startdate, enddate) VALUES ( 'Zadovoljstvo korisnika sa našim proizvodima', To_Date('21-05-2021', 'dd-mm-yyyy'), To_Date('21-05-2021', 'dd-mm-yyyy'));
     INSERT INTO FADevice ( DeviceName, CampaignID, InstallationCode) VALUES ('grupa1', 1, 'spaha1');
     INSERT INTO FADevice ( DeviceName, CampaignID, InstallationCode) VALUES ('grupa2', 1, 'spaha2');
 
@@ -309,12 +309,12 @@ module.exports.fillDB = async function fillDB() {
 
 
 
-   Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);
-   Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);
-   Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);
-   Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,5,null);
-   Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,6,null);
-   Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,6,null);
+   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);
+   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);
+   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);
+   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,5,null);
+   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,6,null);
+   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,6,null);
 
     `;
 
