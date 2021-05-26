@@ -240,7 +240,9 @@ async function saveResponse(req, res) {
             
 
         } catch (err) {
-           
+            res.status(400);
+            res.send({ error: err });
+            return;
         }
 
     }
