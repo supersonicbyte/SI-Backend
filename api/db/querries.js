@@ -237,6 +237,7 @@ async function saveResponse(req, res) {
         try {
 
             const insertRes = await db.pool.query(insertResponse, [response.QuestionId, response.AnswerId, response.CustomAnswer]);
+            console.log("I GOT \n "+JSON.stringify(response));
             
 
         } catch (err) {
