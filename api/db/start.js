@@ -208,7 +208,7 @@ module.exports.fillDB = async function fillDB() {
     INSERT INTO Campaign (name, startdate, enddate) VALUES ( 'Pitanja o namirnicama', To_Date('01-03-2021', 'dd-mm-yyyy'), To_Date('18-08-2021', 'dd-mm-yyyy'));
     INSERT INTO FADevice ( DeviceName, CampaignID, InstallationCode) VALUES ('grupa3', 1, 'spaha3');
 
-    Insert into Answer(AnswerId,AnswerText,IsImage) values (-1,'ok',false);
+    Insert into Answer(AnswerId,AnswerText,IsImage) values (-1,' ',false);
     
     Insert into Answer(AnswerText,IsImage) values ('Musko',false); --1
     Insert into Answer(AnswerText,IsImage) values ('Zensko',false); --2
