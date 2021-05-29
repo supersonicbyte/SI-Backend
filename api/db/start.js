@@ -123,32 +123,32 @@ CONSTRAINT Pk_UserResponse_ResponseID PRIMARY KEY
 
 -- Relationship Fk_Campaign_FADevice_CampaignID
 ALTER TABLE FADevice
-ADD CONSTRAINT Fk_Campaign_FADevice_CampaignID FOREIGN KEY (CampaignID) REFERENCES Campaign (CampaignID);
+ADD CONSTRAINT Fk_Campaign_FADevice_CampaignID FOREIGN KEY (CampaignID) REFERENCES Campaign (CampaignID) ON DELETE CASCADE;
 
 
 -- Relationship Fk_Campaign_Question_CampaignID
 ALTER TABLE Question
-ADD CONSTRAINT Fk_Campaign_Question_CampaignID FOREIGN KEY (CampaignID) REFERENCES Campaign (CampaignID);
+ADD CONSTRAINT Fk_Campaign_Question_CampaignID FOREIGN KEY (CampaignID) REFERENCES Campaign (CampaignID) ON DELETE CASCADE;
 
 
 -- Relationship Fk_Answer_QuestionAnswer_AnswerID
 ALTER TABLE Question_Answer
-ADD CONSTRAINT Fk_Answer_QuestionAnswer_AnswerID FOREIGN KEY (AnswerID) REFERENCES Answer (AnswerID);
+ADD CONSTRAINT Fk_Answer_QuestionAnswer_AnswerID FOREIGN KEY (AnswerID) REFERENCES Answer (AnswerID) ON DELETE CASCADE;
 
 
 -- Relationship Fk_Question_QuestionAnswer_QuestionID
 ALTER TABLE Question_Answer
-ADD CONSTRAINT Fk_Question_QuestionAnswer_QuestionID FOREIGN KEY (QuestionID) REFERENCES Question (QuestionID);
+ADD CONSTRAINT Fk_Question_QuestionAnswer_QuestionID FOREIGN KEY (QuestionID) REFERENCES Question (QuestionID) ON DELETE CASCADE;
 
 
 -- Relationship Fk_Question_UserResponse_QuestionID
 ALTER TABLE UserResponse
-ADD CONSTRAINT Fk_Question_UserResponse_QuestionID FOREIGN KEY (QuestionID) REFERENCES Question (QuestionID);
+ADD CONSTRAINT Fk_Question_UserResponse_QuestionID FOREIGN KEY (QuestionID) REFERENCES Question (QuestionID) ON DELETE CASCADE;
 
 
 -- Relationship Fk_Answer_UserResponse_AnswerID
 ALTER TABLE UserResponse
-ADD CONSTRAINT Fk_Answer_UserResponse_AnswerID FOREIGN KEY (AnswerID) REFERENCES Answer (AnswerID);
+ADD CONSTRAINT Fk_Answer_UserResponse_AnswerID FOREIGN KEY (AnswerID) REFERENCES Answer (AnswerID) ON DELETE CASCADE;
 
 `
 
@@ -172,7 +172,7 @@ module.exports.createDB = async function createDB() {
     } catch (error) {
         console.log("Database Exists Already");
     }*/
-    
+
     try {
         const res = await db.pool.query(generateDB);
         console.log("Generating a new database");
@@ -326,18 +326,18 @@ module.exports.fillDB = async function fillDB() {
 
         console.log(exist.rowCount);
 
-        if(exist.rowCount==0){
+        if (exist.rowCount == 0) {
             await db.pool.query(fill);
             console.log("Filling DB with data");
             return;
         }
 
     } catch (error) {
-        console.log("Error while filling ",error);
+        console.log("Error while filling ", error);
         return;
     }
 
-    
-    
+
+
 
 }
