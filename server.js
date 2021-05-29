@@ -8,8 +8,7 @@ const campaignRoutes = require('./api/routes/campaignRoutes');
 const questionRoutes = require('./api/routes/questionRoutes');
 const answerRoutes = require('./api/routes/answerRoutes');
 const deviceRoutes = require('./api/routes/deviceRoutes');
-
-const querries = require('./api/db/querries');
+const userRoutes = require('./api/routes/userRoutes');
 
 DBStartHelper.resetDB().then(() => {
     DBStartHelper.createDB().then(() => {
@@ -27,14 +26,7 @@ app.use('/api/campaign', campaignRoutes);
 app.use('/api/question', questionRoutes);
 app.use('/api/answer', answerRoutes);
 app.use('/api/device', deviceRoutes);
-
-
-
-app.post('/api/response/save', querries.saveResponse);
-
-
-
-//app.post('/api/answer/add', querries.addAnswer);
+app.use('/api/user', userRoutes);
 
 app.get('/', (req, res) => { res.send("<h1>Up and running.</h1>"); });
 
@@ -47,16 +39,6 @@ app.get('/api/reset/data', (req, res) => {
         console.log(err);
         res.status(404);
         res.send("Not Ok");
-    }
-});
-
-app.get('/test', async(req, res) => {
-    try {
-        const result = await db.pool.query('SELECT * FROM TEST');
-        res.send(result.rows[0])
-    } catch (error) {
-        console.log(error);
-        res.send("Error");
     }
 });
 

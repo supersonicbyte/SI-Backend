@@ -26,5 +26,4 @@ exports.activateDevice = async function activateDevice(req, res) {
         res.send(error);
 
     }
-
 }
