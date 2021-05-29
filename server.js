@@ -8,7 +8,6 @@ const campaignRoutes = require('./api/routes/campaignRoutes');
 const questionRoutes = require('./api/routes/questionRoutes');
 const answerRoutes = require('./api/routes/answerRoutes');
 const deviceRoutes = require('./api/routes/deviceRoutes');
-const userRoutes = require('./api/routes/userRoutes');
 
 DBStartHelper.resetDB().then(() => {
     DBStartHelper.createDB().then(() => {
@@ -26,7 +25,6 @@ app.use('/api/campaign', campaignRoutes);
 app.use('/api/question', questionRoutes);
 app.use('/api/answer', answerRoutes);
 app.use('/api/device', deviceRoutes);
-app.use('/api/user', userRoutes);
 
 app.get('/', (req, res) => { res.send("<h1>Up and running.</h1>"); });
 
