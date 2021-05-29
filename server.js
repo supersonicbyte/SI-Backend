@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000;
 const campaignRoutes = require('./api/routes/campaignRoutes');
 const questionRoutes = require('./api/routes/questionRoutes');
 const answerRoutes = require('./api/routes/answerRoutes');
+const deviceRoutes = require('./api/routes/deviceRoutes');
 
 const querries = require('./api/db/querries');
 
@@ -25,9 +26,7 @@ app.use(cors());
 app.use('/api/campaign', campaignRoutes);
 app.use('/api/question', questionRoutes);
 app.use('/api/answer', answerRoutes);
-
-
-app.get('/api/device/activate/:code', querries.activateDevice);
+app.use('/api/device', deviceRoutes);
 
 
 
