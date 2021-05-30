@@ -108,6 +108,8 @@ CREATE TABLE
 	, CustomAnswer TEXT NULL
 	, QuestionID INT NOT NULL
 	, AnswerID INT
+    , DeviceID INT NOT NULL
+    , Date Date Default Current_Timestamp
 ,
 CONSTRAINT Pk_UserResponse_ResponseID PRIMARY KEY
 (
@@ -144,6 +146,10 @@ ADD CONSTRAINT Fk_Question_QuestionAnswer_QuestionID FOREIGN KEY (QuestionID) RE
 -- Relationship Fk_Question_UserResponse_QuestionID
 ALTER TABLE UserResponse
 ADD CONSTRAINT Fk_Question_UserResponse_QuestionID FOREIGN KEY (QuestionID) REFERENCES Question (QuestionID) ON DELETE CASCADE;
+
+-- Relationship Fk_Question_UserResponse_DeviceID
+ALTER TABLE UserResponse
+ADD CONSTRAINT Fk_Question_UserResponse_DeviceID FOREIGN KEY (DeviceID) REFERENCES FADevice (DeviceID) ON DELETE CASCADE;
 
 
 -- Relationship Fk_Answer_UserResponse_AnswerID
@@ -311,12 +317,12 @@ module.exports.fillDB = async function fillDB() {
 
 
 
-   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);
-   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);
-   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,4,null);
-   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,5,null);
-   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,6,null);
-   --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer) values(3,6,null);
+  -- Insert into UserResponse(QuestionID,AnswerID,CustomAnswer,DeviceID) values(3,4,null,1);
+  -- Insert into UserResponse(QuestionID,AnswerID,CustomAnswer,DeviceID) values(3,4,null,2);
+  -- Insert into UserResponse(QuestionID,AnswerID,CustomAnswer,DeviceID) values(3,5,null,1);
+  --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer,DeviceID) values(3,5,null,2);
+  --Insert into UserResponse(QuestionID,AnswerID,CustomAnswer,DeviceID) values(3,6,null,1);
+  -- Insert into UserResponse(QuestionID,AnswerID,CustomAnswer,DeviceID) values(3,6,null,2);
 
     `;
 

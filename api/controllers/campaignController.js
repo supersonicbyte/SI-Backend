@@ -7,6 +7,7 @@ const Error = require('../models/error.js');
 const selectCampaign = "Select c.* From Campaign c Where c.CampaignID=$1";
 const selectQuestion = "Select q.* From Campaign c, Question q Where c.CampaignID = q.CampaignID and c.CampaignID=$1";
 const selectAnswers = `Select a.* from Question q,Answer a,Question_Answer qa where q.QuestionID = qa.QuestionID and a.AnswerID = qa.AnswerID and q.QuestionID = $1`;
+const selectDevices = "Select * from fadevice where campaignid = $1";
 exports.getCampaignById = async function getCampaign(req, res) {
     try {
         const responseJSON = {};
@@ -58,8 +59,20 @@ exports.getCampaignById = async function getCampaign(req, res) {
             questionJSON.QuestionAnswers = QuestionAnswers;
             questions.push(questionJSON);
         }
+
+        const devices = [];
+
+        const devicesRes =await db.pool.query(selectDevices,[campaign_id]);
+        console.log("Got "+ devicesRes.rowCount);
+
+        for(let i = 0 ; i<  devicesRes.rowCount;i++){
+            const device = devicesRes.rows[i];
+            devices.push({deviceId:device.deviceid,name:device.devicename});
+        }
+
         responseJSON.success = true;
         responseJSON.Questions = questions;
+        responseJSON.Devices = devices;
         res.send(responseJSON);
         return;
 
@@ -79,12 +92,14 @@ const insertCampaign = "Insert into campaign(Name,StartDate,EndDate) values ($1,
 const insertQuestion = "Insert into question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignId) values($1,$2,$3,$4,$5,$6,$7) Returning *";
 const insertAnswer = "Insert into answer(answertext,isimage) values ($1,$2) Returning *";
 const insertQuestionAnswer = "Insert into question_answer(questionid,answerid) values ($1,$2)";
+const updateDevice  ="Update FADevice set campaignid = $1 where deviceid=$2";
 exports.createCampaign = async function createCampaign(req, res) {
     const {
         Name,
         StartDate,
         EndDate,
-        Questions
+        Questions,
+        Devices
     } = req.body;
 
     if (Name == null || StartDate == null || EndDate == null || Questions == null || Questions.length == null) {
@@ -104,7 +119,7 @@ exports.createCampaign = async function createCampaign(req, res) {
                 return;
             } else {
                 CampaignId = result.rows[0].campaignid;
-                console.log("Its "+CampaignId);
+                //ovdje dodaje pitanja i odgovore im
                 for (let i = 0; i < Questions.length; i++) {
                     let QuestionId = null;
                     const {
@@ -141,6 +156,16 @@ exports.createCampaign = async function createCampaign(req, res) {
                         continue;
                     }
                 }
+                //ovdje dodaje sve FA devices
+                if(Devices!=null &&  Devices.length != 0){
+
+                    for(let i = 0 ; i < Devices.length ; i++){
+                        const updateDeviceRes = await db.pool.query(updateDevice,[CampaignId,Devices[i].DeviceId]);
+                    }
+
+
+                }
+
 
                 res.status(200);
                 res.send({
@@ -169,7 +194,8 @@ exports.editCampaign = async function editCampaign(req, res) {
         CampaignId,
         Name,
         StartDate,
-        EndDate
+        EndDate,
+        Devices
     } = req.body;
     if (CampaignId == null || Name == null || StartDate == null || EndDate == null) {
         res.status(300);
@@ -179,6 +205,14 @@ exports.editCampaign = async function editCampaign(req, res) {
     }
     try {
         const updateRes = await db.pool.query(updateCampaign, [Name, StartDate, EndDate, CampaignId]);
+        if(Devices != null && Devices.length!=0){
+
+            for(let i = 0 ; i <Devices.length;i++){
+
+            const updateDeviceRes = db.pool.query(updateDevice,[CampaignId,Devices[i].DeviceId]);
+
+            }
+        }
         res.status(200);
         res.send({
             success: true
@@ -187,6 +221,7 @@ exports.editCampaign = async function editCampaign(req, res) {
     } catch (err) {
         res.status(500);
         const error = new Error(0, "Unknown server error.");
+        console.log(err);
         res.send(error);
         return;
     }
