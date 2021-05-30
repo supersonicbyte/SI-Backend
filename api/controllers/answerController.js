@@ -22,7 +22,8 @@ exports.getAnswerById = async function getAnswerById(req, res) {
                 success: true,
                 AnswerId: result.rows[0].answerid,
                 Answertext: result.rows[0].answertext,
-                IsImage: result.rows[0].isimage
+                IsImage: result.rows[0].isimage,
+                Base64 : result.rows[0].base64
             }
             res.status(200);
             res.send(response);
@@ -47,10 +48,10 @@ exports.createAnswer = async function addAnswer(req, res) {
             res.send(error);
             return;
         }
-        const insertAnswer = "Insert into answer(answertext,isimage) values ($1,$2) Returning *";
+        const insertAnswer = "Insert into answer(answertext,isimage) values ($1,$2,$3) Returning *";
         const insertQuestionAnswer = "Insert into question_answer(questionid,answerid) values ($1,$2)";
         try {
-            const insertRes = await db.pool.query(insertAnswer, [Answer.AnswerText, Answer.IsAPicture]);
+            const insertRes = await db.pool.query(insertAnswer, [Answer.AnswerText, Answer.IsAPicture, Answer.Base64]);
             const AnswerId = insertRes.rows[0].answerid;
             const insertRes2 = await db.pool.query(insertQuestionAnswer, [QuestionId, AnswerId]);
             res.status(200);

@@ -52,7 +52,8 @@ exports.getCampaignById = async function getCampaign(req, res) {
                     Answer: {
                         AnswerId: answer.answerid,
                         AnswerText: answer.answertext,
-                        IsAPicture: answer.isimage
+                        IsAPicture: answer.isimage,
+                        Base64: answer.base64
                     }
                 });
             }

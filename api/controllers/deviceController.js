@@ -139,3 +139,108 @@ exports.getResponses = async function getResponses(req, res) {
     }
 
 }
+
+const updateDeviceDependent = "Update fadevice set dependentquestionid = $1 where deviceid = $2";
+exports.addDependent = async function addDependent(req, res) {
+
+    const {QuestionId,DeviceId} =req.body;
+    
+    try{
+
+        const updateRes = db.pool.query(updateDeviceDependent,[QuestionId,DeviceId]);
+
+        res.status(200);
+        res.send({success:true});
+
+    }catch(err){
+        console.log(err);
+        res.status(400);
+        res.send({
+            error: err
+        });
+
+    }
+
+
+}
+
+
+const selectDevicedependent = "Select dependentquestionid from fadevice where deviceid = $1";
+const selectQuestion = "Select * From  Question q Where q.QuestionId = $1";
+const selectAnswers = "Select a.* from Question q,Answer a,Question_Answer qa where q.QuestionID = qa.QuestionID and a.AnswerID = qa.AnswerID and q.QuestionID = $1";
+
+
+exports.getDependent = async function getDependent(req, res) {
+
+    const DeviceId =req.params.deviceId;
+    
+    try{
+
+        const selectRes =await db.pool.query(selectDevicedependent,[DeviceId]);
+
+        if( selectRes.rows[0].dependentquestionid==null){
+            res.status(404);
+            res.send({message:"Device does not have dependent question."});
+            return;
+        }
+      ;
+
+        const QuestionId = selectRes.rows[0].dependentquestionid;
+        //------------------------------------------------------
+        let responseJSON = {};
+        const questions = [];
+        const questionsRes = await db.pool.query(selectQuestion,[QuestionId]);
+
+        let question = questionsRes.rows[0];
+        const id = question.questionid;
+
+        const questionJSON = {};
+        questionJSON.QuestionId = question.questionid;
+        questionJSON.QuestionType = question.questiontype;
+        questionJSON.QuestionText = question.questiontext;
+        questionJSON.IsDependent = question.isdependent;
+        questionJSON.Data1 = question.data1;
+        questionJSON.Data2 = question.data2;
+        questionJSON.Data3 = question.data3;
+
+        const answerRes = await db.pool.query(selectAnswers, [id]);
+
+        const QuestionAnswers = [];
+
+        for (let i = 0; i < answerRes.rowCount; i++) {
+            let answer = answerRes.rows[i];
+            QuestionAnswers.push({
+                QuestionId: id,
+                AnswerId: answer.answerid,
+                Answer: {
+                    AnswerId: answer.answerid,
+                    AnswerText: answer.answertext,
+                    IsAPicture: answer.isimage
+                }
+            });
+        }
+        questionJSON.QuestionAnswers = QuestionAnswers;
+        questions.push(questionJSON);
+
+  
+
+        responseJSON.success = true;
+        responseJSON.Questions = questions;
+        res.send(responseJSON);
+        return;
+
+
+        res.status(200);
+        res.send({Question});
+
+    }catch(err){
+        console.log(err);
+        res.status(400);
+        res.send({
+            error: err
+        });
+
+    }
+
+
+}
