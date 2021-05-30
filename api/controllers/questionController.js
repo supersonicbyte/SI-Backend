@@ -61,6 +61,7 @@ exports.deleteQuestion = async function deleteQuestion(req, res) {
             const selectRes = await db.pool.query(selectAnswers, [id]);
             const deleteRes1 = await db.pool.query(deleteQuestion1, [id]);
             var bar = await new Promise((resolve, reject) => {
+                if(selectRes.rowCount==0)resolve();
                 selectRes.rows.forEach(async(answer, index, array) => {
                     await db.pool.query(deleteAnswer, [answer.answerid]);
                     if (index === array.length - 1) resolve();
@@ -74,6 +75,7 @@ exports.deleteQuestion = async function deleteQuestion(req, res) {
             });
             return;
         } catch (err) {
+            console.log("Error Deleting Question \n"+err);
             res.status(500);
             const error = new Error(1, "Unknow server error");
             res.send(error);
@@ -81,7 +83,7 @@ exports.deleteQuestion = async function deleteQuestion(req, res) {
         }
     }
     /**
-     * CRATE Question
+     * CREATE Question
      */
 const insertQuestion = "Insert into question(QuestionType,QuestionText,IsDependent,Data1,Data2,Data3,CampaignId) values($1,$2,$3,$4,$5,$6,$7) Returning *";
 const insertAnswer = "Insert into answer(answertext,isimage) values ($1,$2) Returning *";
