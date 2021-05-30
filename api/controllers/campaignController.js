@@ -104,6 +104,7 @@ exports.createCampaign = async function createCampaign(req, res) {
                 return;
             } else {
                 CampaignId = result.rows[0].campaignid;
+                console.log("Its "+CampaignId);
                 for (let i = 0; i < Questions.length; i++) {
                     let QuestionId = null;
                     const {
@@ -140,6 +141,13 @@ exports.createCampaign = async function createCampaign(req, res) {
                         continue;
                     }
                 }
+
+                res.status(200);
+                res.send({
+                    success: true,
+                    CampaignId:CampaignId
+                });
+                return;
             }
         });
     } catch (err) {
@@ -149,11 +157,7 @@ exports.createCampaign = async function createCampaign(req, res) {
         });
         return;
     }
-    res.status(200);
-    res.send({
-        success: true,
-        CampaignId
-    });
+   
 }
 
 /**

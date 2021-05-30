@@ -57,10 +57,12 @@ exports.deleteQuestion = async function deleteQuestion(req, res) {
         const deleteQuestion2 = " Delete from question where questionid = $1";
         const deleteUserResponse = "Delete from userResponse where questionid = $1";
         try {
-            const deleteUserRes = await db.pool.query(deleteUserResponse, [id]);
-            const selectRes = await db.pool.query(selectAnswers, [id]);
-            const deleteRes1 = await db.pool.query(deleteQuestion1, [id]);
+            const deleteUserRes = await db.pool.query(deleteUserResponse, [id]);//deletes from user responses
+            const selectRes = await db.pool.query(selectAnswers, [id]);//selects all answersid that the question has
+            const deleteRes1 = await db.pool.query(deleteQuestion1, [id]);//deletes the question from question_answer
+
             var bar = await new Promise((resolve, reject) => {
+                //if it has no elements resolve the promise
                 if(selectRes.rowCount==0)resolve();
                 selectRes.rows.forEach(async(answer, index, array) => {
                     await db.pool.query(deleteAnswer, [answer.answerid]);
@@ -68,7 +70,7 @@ exports.deleteQuestion = async function deleteQuestion(req, res) {
                 });
 
             });
-            const deleteRes2 = await db.pool.query(deleteQuestion2, [id]);
+            const deleteRes2 = await db.pool.query(deleteQuestion2, [id]);//deletes the question 
             res.status(200);
             res.send({
                 success: true
@@ -111,7 +113,7 @@ exports.addQuestion = async function addQuestion(req, res) {
         const insertRes = await db.pool.query(insertQuestion, [QuestionType, QuestionText, IsDependent, Data1, Data2, Data3, CampaignId]);
         QuestionId = insertRes.rows[0].questionid;
         if (QuestionType === 'Text') {
-            const insertRes = await db.pool.query(insertQuestionAnswer, [QuestionId, -1]);
+            const insertRes = await db.pool.query(insertQuestionAnswer, [QuestionId, null]);
         } else {
             for (let i = 0; i < Answers.length; i++) {
                 let answer = Answers[i];

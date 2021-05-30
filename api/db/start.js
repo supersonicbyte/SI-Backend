@@ -91,7 +91,7 @@ CREATE TABLE
 	Question_Answer
 (
 	ID SERIAL NOT NULL
-	, AnswerID INT NOT NULL
+	, AnswerID INT 
 	, QuestionID INT NOT NULL
 ,
 CONSTRAINT Pk_QuestionAnswer_ID PRIMARY KEY

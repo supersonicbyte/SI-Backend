@@ -14,7 +14,7 @@ const pool = new Pool({
         rejectUnauthorized: false
     },
 
-   /* user: 'postgres',
+    /*user: 'postgres',
     host: '127.0.0.1',
     database: 'SI-DB',
     password: '1234',
