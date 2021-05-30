@@ -40,9 +40,9 @@ exports.saveResponse = async function saveResponse(req, res) {
     }
     for (let i = 0; i < responses.length; i++) {
         let response = responses[i];
+        if(response.AnswerId == -1)response.AnswerId=null;
         try {
             const insertRes = await db.pool.query(insertResponse, [response.QuestionId, response.AnswerId, response.CustomAnswer]);
-            console.log("I GOT \n " + JSON.stringify(response));
         } catch (err) {
             res.status(400);
             res.send({

@@ -107,7 +107,7 @@ CREATE TABLE
 	ResponseID SERIAL NOT NULL
 	, CustomAnswer TEXT NULL
 	, QuestionID INT NOT NULL
-	, AnswerID INT NOT NULL
+	, AnswerID INT
 ,
 CONSTRAINT Pk_UserResponse_ResponseID PRIMARY KEY
 (
